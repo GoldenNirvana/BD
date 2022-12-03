@@ -29,9 +29,6 @@ namespace WinFormsApp1
             adapter.Fill(table);
             if (table.Rows.Count == 1)
             {
-              
-                MessageBox.Show("Succesfull");
-
                 string query1 = $"select id, login, passwd, role, personalDataId from users where login = '{login}' and passwd = '{pswd}' and role = 0";
                 SqlCommand command1 = new SqlCommand(query1, database.GetSqlConnection());
                 adapter.SelectCommand = command1;
@@ -39,8 +36,6 @@ namespace WinFormsApp1
                 adapter.Fill(table);
                 if (table.Rows.Count == 1)
                 {
-                    MessageBox.Show("Вошли как ученик");
-                    Hide();
                     Form pupil = new PupilWindow();
                     pupil.Show();
                 }
@@ -52,8 +47,6 @@ namespace WinFormsApp1
                 adapter.Fill(table);
                 if (table.Rows.Count == 1)
                 {
-                    MessageBox.Show("Вошли как учитель");
-                    Hide();
                     Form pupil = new TeacherWindow();
                     pupil.Show();
                 }
@@ -65,14 +58,9 @@ namespace WinFormsApp1
                 adapter.Fill(table);
                 if (table.Rows.Count == 1)
                 {
-                    MessageBox.Show("Вошли как секретарь");
-                    Hide();
-                    Form pupil = new SecWindow();
+                    Form pupil = new SecWindow(this);
                     pupil.Show();
                 }
-
-                
-
             }
         }
     }

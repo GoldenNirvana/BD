@@ -12,9 +12,50 @@ namespace WinFormsApp1
 {
     public partial class SecWindow : Form
     {
-        public SecWindow()
+
+        Form form;
+
+        public SecWindow(Form form)
         {
+            this.form = form;
+            form.Hide();
             InitializeComponent();
+        }
+
+        private void changeScheduleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void putSubjectToTeacher(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addOrDeletePupil(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void addorDeleteHeadTeacher(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showAllTeachers(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showHeadTeachers(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            form.Show();
+            Close();
         }
     }
 }
