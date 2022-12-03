@@ -21,47 +21,32 @@ namespace WinFormsApp1
         {
             var login = textBox1.Text;
             var pswd = textBox2.Text;
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable table = new DataTable();
             string query = $"select id, login, passwd, role, personalDataId from users where login = '{login}' and passwd = '{pswd}'";
+            database.openConnection();
             SqlCommand command = new SqlCommand(query, database.GetSqlConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            if (table.Rows.Count == 1)
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
             {
-                string query1 = $"select id, login, passwd, role, personalDataId from users where login = '{login}' and passwd = '{pswd}' and role = 0";
-                SqlCommand command1 = new SqlCommand(query1, database.GetSqlConnection());
-                adapter.SelectCommand = command1;
-                table.Clear();
-                adapter.Fill(table);
-                if (table.Rows.Count == 1)
+                reader.Read();
+                object role = reader.GetValue(3);
+                int r = int.Parse(role.ToString());
+                if (r == 0)
                 {
                     Form pupil = new PupilWindow();
                     pupil.Show();
                 }
-
-                string query2 = $"select id, login, passwd, role, personalDataId from users where login = '{login}' and passwd = '{pswd}' and role = 1";
-                SqlCommand command2 = new SqlCommand(query2, database.GetSqlConnection());
-                adapter.SelectCommand = command2;
-                table.Clear();
-                adapter.Fill(table);
-                if (table.Rows.Count == 1)
+                if (r == 1)
                 {
                     Form pupil = new TeacherWindow();
                     pupil.Show();
                 }
-
-                string query3 = $"select id, login, passwd, role, personalDataId from users where login = '{login}' and passwd = '{pswd}' and role = 2";
-                SqlCommand command3 = new SqlCommand(query3, database.GetSqlConnection());
-                adapter.SelectCommand = command3;
-                table.Clear();
-                adapter.Fill(table);
-                if (table.Rows.Count == 1)
+                if (r == 2)
                 {
                     Form pupil = new SecWindow(this);
                     pupil.Show();
                 }
             }
+            database.closeConnection();
         }
     }
 }
