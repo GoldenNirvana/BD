@@ -21,5 +21,25 @@ namespace WinFormsApp1
         {
 
         }
+
+        private void checkMarks_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addAnswer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void raiting_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addMonye_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

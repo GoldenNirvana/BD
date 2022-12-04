@@ -25,9 +25,8 @@ namespace WinFormsApp1
             database.openConnection();
             SqlCommand command = new SqlCommand(query, database.GetSqlConnection());
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            if (reader.Read())
             {
-                reader.Read();
                 object role = reader.GetValue(3);
                 int r = int.Parse(role.ToString());
                 if (r == 0)
@@ -37,7 +36,7 @@ namespace WinFormsApp1
                 }
                 if (r == 1)
                 {
-                    Form pupil = new TeacherWindow();
+                    Form pupil = new TeacherWindow(this);
                     pupil.Show();
                 }
                 if (r == 2)
