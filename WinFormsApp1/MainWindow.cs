@@ -28,15 +28,17 @@ namespace WinFormsApp1
             if (reader.Read())
             {
                 object role = reader.GetValue(3);
+                object pdID = reader.GetValue(4);
                 int r = int.Parse(role.ToString());
+                int id = int.Parse(pdID.ToString());
                 if (r == 0)
                 {
-                    Form pupil = new PupilWindow();
+                    Form pupil = new PupilWindow(id);
                     pupil.Show();
                 }
                 if (r == 1)
                 {
-                    Form pupil = new TeacherWindow(this);
+                    Form pupil = new TeacherWindow(this, id);
                     pupil.Show();
                 }
                 if (r == 2)

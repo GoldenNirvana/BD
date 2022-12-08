@@ -28,8 +28,10 @@ namespace WinFormsApp1
         int index;
         DataBase database = new DataBase();
         private Form f;
-        public TeacherWindow(Form form)
+        int pdID;
+        public TeacherWindow(Form form, int pdID)
         {
+            this.pdID = pdID;
             f = form;
             f.Hide();
             InitializeComponent();
@@ -48,6 +50,7 @@ namespace WinFormsApp1
         private void createColumns()
         {
             dataGridView1.Columns.Add("id", "ID");
+            dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns.Add("n1", "Фамилия");
             dataGridView1.Columns.Add("n2", "Имя");
             dataGridView1.Columns.Add("n3", "Отчество");
@@ -81,7 +84,10 @@ namespace WinFormsApp1
         private void classes_SelectedIndexChanged(object sender, EventArgs e)
         {
             string q = $"select id from Classes where ClassName = '{classes.Text}'";
-            string classID;
+            nameBox.Text = "";
+            surnameBox.Text = "";
+            FatherBox.Text = "";
+            averadgeBox.Text = "";
             database.openConnection();
             SqlCommand command = new SqlCommand(q, database.GetSqlConnection());
             SqlDataReader reader = command.ExecuteReader();
@@ -103,10 +109,6 @@ namespace WinFormsApp1
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView2.Columns.Clear();
-            dataGridView2.Columns.Add("gr", "Оценка");
-            dataGridView2.Columns.Add("date", "Дата обновления");
-
             index = e.RowIndex;
             if (index >= 0)
             {
@@ -114,27 +116,96 @@ namespace WinFormsApp1
                 nameBox.Text = row.Cells[1].Value.ToString();
                 surnameBox.Text = row.Cells[2].Value.ToString();
                 FatherBox.Text = row.Cells[3].Value.ToString();
-
-                int id = int.Parse(row.Cells[0].Value.ToString());
-                string q = $"select Grade, UpdateDate from HomeTasksAnswers where PupilID = '{id.ToString()}'";
-                int count = 0;
-                double sum = 0.0;
-                SqlCommand command1 = new SqlCommand(q, database.GetSqlConnection());
-                database.openConnection();
-                SqlDataReader reader1 = command1.ExecuteReader();
-                while (reader1.Read())
-                {
-                    count++;
-                    sum += reader1.GetInt32(0);
-                    dataGridView2.Rows.Add(reader1.GetInt32(0), reader1.GetString(1));
-                }
-                if (count > 0)
-                {
-                    averadgeBox.Text = (sum / count).ToString();
-                    database.closeConnection();
-                    reader1.Close();
-                }
+                updateMarks();
             }
+        }
+
+        private void addMark_Click(object sender, EventArgs e)
+        {
+            CheckAnswersFrom from = new CheckAnswersFrom(pdID, createSubjectAvalible());
+            from.Show();
+        }
+
+        private void changeMark_Click(object sender, EventArgs e)
+        {
+            int ind = dataGridView2.CurrentCell.RowIndex;
+            if (textBox1.Text != "")
+            {
+                
+                DataGridViewRow row = dataGridView2.Rows[ind];
+                string q = $"update HomeTasksAnswers set Grade = '{textBox1.Text}' where ID = {row.Cells[0].Value.ToString()}";
+                database.openConnection();
+                SqlCommand command = new SqlCommand(q, database.GetSqlConnection());
+                command.ExecuteNonQuery();
+                database.closeConnection();
+                updateMarks();
+            }
+        }
+
+        private void updateMarks()
+        {
+            dataGridView2.Columns.Clear();
+            dataGridView2.Columns.Add("id", "ID");
+            dataGridView2.Columns[0].Visible = false;
+            dataGridView2.Columns.Add("gr", "Оценка");
+            dataGridView2.Columns.Add("date", "Дата обновления");
+            DataGridViewRow row = dataGridView1.Rows[index];
+            int id = int.Parse(row.Cells[0].Value.ToString());
+            string q = $"select ID, Grade, UpdateDate from HomeTasksAnswers where PupilID = '{id.ToString()}'";
+            int count = 0;
+            double sum = 0.0;
+            SqlCommand command1 = new SqlCommand(q, database.GetSqlConnection());
+            database.openConnection();
+            SqlDataReader reader1 = command1.ExecuteReader();
+            while (reader1.Read())
+            {
+                
+                try
+                {
+                    sum += reader1.GetInt32(1);
+                }
+                catch
+                {
+                    continue;
+                }
+                count++;
+                dataGridView2.Rows.Add(reader1.GetInt32(0), reader1.GetInt32(1), reader1.GetString(2));
+            }
+            if (count > 0)
+            {
+                averadgeBox.Text = (sum / count).ToString();
+                database.closeConnection();
+                reader1.Close();
+            }
+            database.closeConnection();
+        }
+
+        private void addDZ_Click(object sender, EventArgs e)
+        {
+            AddHomeTask task = new AddHomeTask(pdID, createSubjectAvalible());
+            task.Show();
+        }
+
+        private List<string> createSubjectAvalible()
+        {
+            dataGridView1.Rows.Clear();
+            createColumns();
+            string q = $"select SubjectID from Specializations\r\njoin Teachers\r\non Teachers.ID = Specializations.TeacherID\r\njoin users\r\non DataID = users.personalDataId\r\nwhere personalDataId = {pdID}";
+            List<string> array = new List<string>();
+
+            database.openConnection();
+            SqlCommand command = new SqlCommand(q, database.GetSqlConnection());
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                string subjectAvalible = reader.GetValue(0).ToString();
+                array.Add(subjectAvalible);
+            }
+            reader.Close();
+            database.closeConnection();
+            return array;
         }
     }
 }

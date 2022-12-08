@@ -30,6 +30,7 @@
             this.addAnswer = new System.Windows.Forms.Button();
             this.raiting = new System.Windows.Forms.Button();
             this.addMonye = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,12 +51,12 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 338);
+            this.dataGridView1.Size = new System.Drawing.Size(808, 338);
             this.dataGridView1.TabIndex = 3;
             // 
             // addAnswer
             // 
-            this.addAnswer.Location = new System.Drawing.Point(216, 386);
+            this.addAnswer.Location = new System.Drawing.Point(180, 386);
             this.addAnswer.Name = "addAnswer";
             this.addAnswer.Size = new System.Drawing.Size(162, 52);
             this.addAnswer.TabIndex = 4;
@@ -65,9 +66,9 @@
             // 
             // raiting
             // 
-            this.raiting.Location = new System.Drawing.Point(419, 386);
+            this.raiting.Location = new System.Drawing.Point(479, 386);
             this.raiting.Name = "raiting";
-            this.raiting.Size = new System.Drawing.Size(162, 52);
+            this.raiting.Size = new System.Drawing.Size(173, 52);
             this.raiting.TabIndex = 5;
             this.raiting.Text = "Рейтинг";
             this.raiting.UseVisualStyleBackColor = true;
@@ -75,7 +76,7 @@
             // 
             // addMonye
             // 
-            this.addMonye.Location = new System.Drawing.Point(626, 386);
+            this.addMonye.Location = new System.Drawing.Point(658, 386);
             this.addMonye.Name = "addMonye";
             this.addMonye.Size = new System.Drawing.Size(162, 52);
             this.addMonye.TabIndex = 6;
@@ -83,11 +84,20 @@
             this.addMonye.UseVisualStyleBackColor = true;
             this.addMonye.Click += new System.EventHandler(this.addMonye_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(348, 386);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(125, 52);
+            this.textBox1.TabIndex = 7;
+            // 
             // PupilWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(832, 453);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.addMonye);
             this.Controls.Add(this.raiting);
             this.Controls.Add(this.addAnswer);
@@ -99,6 +109,7 @@
             this.Load += new System.EventHandler(this.PupilWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -109,5 +120,6 @@
         private Button addAnswer;
         private Button raiting;
         private Button addMonye;
+        private TextBox textBox1;
     }
 }

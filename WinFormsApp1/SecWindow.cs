@@ -57,5 +57,10 @@ namespace WinFormsApp1
             form.Show();
             Close();
         }
+
+        private void SecWindow_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

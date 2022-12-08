@@ -31,7 +31,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.addMark = new System.Windows.Forms.Button();
             this.addDZ = new System.Windows.Forms.Button();
-            this.changeLessonTime = new System.Windows.Forms.Button();
             this.changeMark = new System.Windows.Forms.Button();
             this.classes = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -41,6 +40,7 @@
             this.averadgeBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -48,22 +48,23 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(366, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(352, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(245, 426);
+            this.dataGridView1.Size = new System.Drawing.Size(468, 272);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // addMark
             // 
-            this.addMark.Location = new System.Drawing.Point(34, 301);
+            this.addMark.Location = new System.Drawing.Point(194, 386);
             this.addMark.Name = "addMark";
             this.addMark.Size = new System.Drawing.Size(132, 52);
             this.addMark.TabIndex = 1;
-            this.addMark.Text = "Поставить оценку";
+            this.addMark.Text = "Проверить ДЗ";
             this.addMark.UseVisualStyleBackColor = true;
+            this.addMark.Click += new System.EventHandler(this.addMark_Click);
             // 
             // addDZ
             // 
@@ -73,24 +74,17 @@
             this.addDZ.TabIndex = 2;
             this.addDZ.Text = "Задать ДЗ";
             this.addDZ.UseVisualStyleBackColor = true;
-            // 
-            // changeLessonTime
-            // 
-            this.changeLessonTime.Location = new System.Drawing.Point(194, 386);
-            this.changeLessonTime.Name = "changeLessonTime";
-            this.changeLessonTime.Size = new System.Drawing.Size(132, 52);
-            this.changeLessonTime.TabIndex = 3;
-            this.changeLessonTime.Text = "Перенести урок";
-            this.changeLessonTime.UseVisualStyleBackColor = true;
+            this.addDZ.Click += new System.EventHandler(this.addDZ_Click);
             // 
             // changeMark
             // 
-            this.changeMark.Location = new System.Drawing.Point(194, 301);
+            this.changeMark.Location = new System.Drawing.Point(34, 301);
             this.changeMark.Name = "changeMark";
             this.changeMark.Size = new System.Drawing.Size(132, 52);
             this.changeMark.TabIndex = 4;
             this.changeMark.Text = "Исправить оценку";
             this.changeMark.UseVisualStyleBackColor = true;
+            this.changeMark.Click += new System.EventHandler(this.changeMark_Click);
             // 
             // classes
             // 
@@ -151,18 +145,26 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(617, 12);
+            this.dataGridView2.Location = new System.Drawing.Point(352, 301);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(160, 426);
+            this.dataGridView2.Size = new System.Drawing.Size(468, 137);
             this.dataGridView2.TabIndex = 13;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(201, 314);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(125, 27);
+            this.textBox1.TabIndex = 14;
             // 
             // TeacherWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(832, 453);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.averadgeBox);
@@ -172,7 +174,6 @@
             this.Controls.Add(this.button5);
             this.Controls.Add(this.classes);
             this.Controls.Add(this.changeMark);
-            this.Controls.Add(this.changeLessonTime);
             this.Controls.Add(this.addDZ);
             this.Controls.Add(this.addMark);
             this.Controls.Add(this.dataGridView1);
@@ -192,7 +193,6 @@
         private DataGridView dataGridView1;
         private Button addMark;
         private Button addDZ;
-        private Button changeLessonTime;
         private Button changeMark;
         private ComboBox classes;
         private Button button5;
@@ -202,5 +202,6 @@
         private TextBox averadgeBox;
         private Label label1;
         private DataGridView dataGridView2;
+        private TextBox textBox1;
     }
 }
