@@ -62,6 +62,7 @@ namespace WinFormsApp1
         private void CheckAnswersFrom_Load(object sender, EventArgs e)
         {
             updateScr();
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
 
@@ -71,7 +72,7 @@ namespace WinFormsApp1
             int c = 0;
             foreach (string str in subjs)
             {
-                string qu = $"select SubjectName, Namee, Surname, Answer, Classes.ClassName, HomeTasksAnswers.UpdateDate, HomeTasksAnswers.ID from Schedule\r\njoin HomeTasks on HomeTasks.LessonID = Schedule.Id\r\njoin HomeTasksAnswers on HomeTaskID = HomeTasks.ID\r\njoin Pupils on Pupils.DataID = PupilID\r\njoin PersonalData on PersonalData.ID = Pupils.DataID\r\njoin Subjects on Subjects.ID = SubjectID\r\njoin Classes on Classes.Id = Schedule.ClassID\r\nwhere Grade is Null and SubjectID = {str}";
+                string qu = $"select SubjectName, Namee, Surname, Answer, Classes.ClassName, HomeTasksAnswers.UpdateDate, HomeTasksAnswers.ID from Schedule\r\njoin HomeTasks on HomeTasks.LessonID = Schedule.Id\r\njoin HomeTasksAnswers on HomeTaskID = HomeTasks.ID\r\njoin Pupils on Pupils.ID = PupilID\r\njoin PersonalData on PersonalData.ID = Pupils.DataID\r\njoin Subjects on Subjects.ID = SubjectID\r\njoin Classes on Classes.Id = Schedule.ClassID\r\nwhere Grade is Null and SubjectID = {str}";
                 database.openConnection();
                 SqlCommand command1 = new SqlCommand(qu, database.GetSqlConnection());
                 SqlDataReader reader1 = command1.ExecuteReader();

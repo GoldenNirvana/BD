@@ -14,10 +14,13 @@ namespace WinFormsApp1
     {
 
         Form form;
+        string pdId;
 
-        public SecWindow(Form form)
+        public SecWindow(Form form, string pdId)
         {
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.form = form;
+            this.pdId = pdId;
             form.Hide();
             InitializeComponent();
         }
@@ -61,6 +64,12 @@ namespace WinFormsApp1
         private void SecWindow_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            NewUser user = new NewUser();
+            user.Show();
         }
     }
 }

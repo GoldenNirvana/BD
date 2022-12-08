@@ -17,6 +17,7 @@ namespace WinFormsApp1
         int pdId;
         List<string> subj;
 
+
         public AddHomeTask(int id, List<string> subj)
         {
             InitializeComponent();
@@ -50,6 +51,8 @@ namespace WinFormsApp1
                 reader1.Close();
                 db.closeConnection();
             }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
 
         private void AddHomeTask_Load(object sender, EventArgs e)

@@ -23,20 +23,21 @@ namespace WinFormsApp1
             DataTable dt = getPdId(textBox1.Text, textBox2.Text, database);
             if (dt.Rows.Count == 1)
             {
-                string Id = getId(dt.Rows[0]["PersonalDataId"].ToString(), dt.Rows[0]["role"].ToString(), database);
                 if (dt.Rows[0]["role"].ToString() == "0")
                 {
+                    string Id = getId(dt.Rows[0]["PersonalDataId"].ToString(), dt.Rows[0]["role"].ToString(), database);
                     Form pupil = new PupilWindow(int.Parse(Id), classId);
                     pupil.Show();
                 }
                 if (dt.Rows[0]["role"].ToString() == "1")
                 {
+                    string Id = getId(dt.Rows[0]["PersonalDataId"].ToString(), dt.Rows[0]["role"].ToString(), database);
                     Form pupil = new TeacherWindow(this, int.Parse(Id));
                     pupil.Show();
                 }
                 if (dt.Rows[0]["role"].ToString() == "2")
                 {
-                    Form pupil = new SecWindow(this);
+                    Form pupil = new SecWindow(this, dt.Rows[0]["PersonalDataId"].ToString());
                     pupil.Show();
                 }
             }

@@ -64,6 +64,8 @@ namespace WinFormsApp1
         private void refrestDGW(DataGridView dgw, String indexClass)
         {
             dgw.Rows.Clear();
+            
+
             string q = $"select Pupils.ID, Namee, Surname, Patronymic from PersonalData join Pupils on PersonalData.ID = Pupils.DataID where ClassID = '{indexClass}'";
             SqlCommand command = new SqlCommand(q, database.GetSqlConnection());
             database.openConnection();
@@ -105,6 +107,7 @@ namespace WinFormsApp1
         private void TeacherWindow_Load(object sender, EventArgs e)
         {
             createColumns();
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -145,6 +148,7 @@ namespace WinFormsApp1
         private void updateMarks()
         {
             dataGridView2.Columns.Clear();
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView2.Columns.Add("id", "ID");
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns.Add("gr", "Оценка");
@@ -195,7 +199,7 @@ namespace WinFormsApp1
         private List<string> createSubjectAvalible()
         {
             dataGridView1.Rows.Clear();
-            createColumns();
+            
             string q = $"select SubjectID from Specializations\r\njoin Teachers\r\non Teachers.ID = Specializations.TeacherID where Teachers.Id = {pdID}";
             List<string> array = new List<string>();
 
@@ -212,6 +216,11 @@ namespace WinFormsApp1
             reader.Close();
             database.closeConnection();
             return array;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

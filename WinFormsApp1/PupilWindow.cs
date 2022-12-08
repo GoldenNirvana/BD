@@ -20,6 +20,8 @@ namespace WinFormsApp1
 
         public PupilWindow(int id, int classId)
         {
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Id = id;
             this.classId = classId;
             InitializeComponent();
@@ -60,6 +62,7 @@ namespace WinFormsApp1
 
         private void fillTableForMarks()
         {
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView2.Rows.Clear();
             dataBase.openConnection();
             string qu = $"select Grade, SubjectName from HomeTasksAnswers\r\njoin HomeTasks on HomeTasksAnswers.HomeTaskID = HomeTasks.ID\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin Subjects on Schedule.SubjectID = Subjects.ID\r\nwhere PupilID = {Id} and Grade is not Null\r\ngroup by Grade, SubjectName";
