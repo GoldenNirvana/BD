@@ -15,22 +15,24 @@ namespace WinFormsApp1
     public partial class PupilWindow : Form
     {
         DataBase dataBase= new DataBase();
-        int pdId;
+        int Id;
+        int classId;
 
-        public PupilWindow(int id)
+        public PupilWindow(int id, int classId)
         {
-            pdId = id;
+            Id = id;
+            this.classId = classId;
             InitializeComponent();
+            createColumnsForMarks();
             createColumnsForTasks();
             fillTableForTasks();
+            fillTableForMarks();
         }
 
         private void createColumnsForMarks()
         {
-            dataGridView1.Columns.Add("n0", "Предмет");
-            dataGridView1.Columns.Add("n2", "Оценка");
-            dataGridView1.Columns.Add("id", "ID");
-            dataGridView1.Columns[2].Visible = false;
+            dataGridView2.Columns.Add("n0", "Предмет");
+            dataGridView2.Columns.Add("n1", "Оценка");
         }
 
         private void createColumnsForTasks()
@@ -43,8 +45,9 @@ namespace WinFormsApp1
 
         private void fillTableForTasks()
         {
+            dataGridView1.Rows.Clear();
             dataBase.openConnection();
-            string qu = $"select distinct SubjectName, TaskText, HomeTasks.ID from HomeTasks\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin TaskTexts on TaskID = TaskTexts.ID\r\njoin Classes on Classes.ID = ClassID\r\njoin Subjects on SubjectID = Subjects.ID\r\nwhere ClassID = {pdId / 5 + 1} and not exists \r\n(select * from HomeTasksAnswers\r\nwhere PupilID = {pdId} and HomeTasksAnswers.HomeTaskID = HomeTasks.ID)\r\ngroup by SubjectName, TaskText, HomeTasks.ID";
+            string qu = $"select distinct SubjectName, TaskText, HomeTasks.ID from HomeTasks\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin TaskTexts on TaskID = TaskTexts.ID\r\njoin Classes on Classes.ID = ClassID\r\njoin Subjects on SubjectID = Subjects.ID\r\nwhere ClassID = {classId} and not exists \r\n(select * from HomeTasksAnswers\r\nwhere PupilID = {Id} and HomeTasksAnswers.HomeTaskID = HomeTasks.ID)\r\ngroup by SubjectName, TaskText, HomeTasks.ID";
             SqlCommand command1 = new SqlCommand(qu, dataBase.GetSqlConnection());
             SqlDataReader reader1 = command1.ExecuteReader();
             while (reader1.Read())
@@ -55,21 +58,37 @@ namespace WinFormsApp1
             dataBase.closeConnection();
         }
 
+        private void fillTableForMarks()
+        {
+            dataGridView2.Rows.Clear();
+            dataBase.openConnection();
+            string qu = $"select Grade, SubjectName from HomeTasksAnswers\r\njoin HomeTasks on HomeTasksAnswers.HomeTaskID = HomeTasks.ID\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin Subjects on Schedule.SubjectID = Subjects.ID\r\nwhere PupilID = {Id} and Grade is not Null\r\ngroup by Grade, SubjectName";
+            SqlCommand command1 = new SqlCommand(qu, dataBase.GetSqlConnection());
+            SqlDataReader reader1 = command1.ExecuteReader();
+            while (reader1.Read())
+            {
+                dataGridView2.Rows.Add(reader1.GetInt32(0), reader1.GetString(1));
+            }
+            reader1.Close();
+            dataBase.closeConnection();
+        }
+
         private void PupilWindow_Load(object sender, EventArgs e)
         {
-           
+          
         }
 
         private void checkMarks_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void addAnswer_Click(object sender, EventArgs e)
         {
             int i = dataGridView1.CurrentCell.RowIndex;
             string taskId = dataGridView1.Rows[i].Cells[2].Value.ToString();
-            addNewHomeTaskAnswer(textBox1.Text, pdId.ToString(), taskId, dataBase);
+            addNewHomeTaskAnswer(textBox1.Text, Id.ToString(), taskId, dataBase);
+            fillTableForTasks();
         }
 
         private void raiting_Click(object sender, EventArgs e)
@@ -123,6 +142,11 @@ namespace WinFormsApp1
             adapter.SelectCommand = command;
             adapter.Fill(table);
             return table;
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

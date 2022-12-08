@@ -122,6 +122,7 @@ namespace WinFormsApp1
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
+            MessageBox.Show("Задание выдано.");
             return table;
         }
     }

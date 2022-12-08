@@ -110,7 +110,7 @@ namespace WinFormsApp1
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             index = e.RowIndex;
-            if (index >= 0)
+            if (index >= 0 && index < dataGridView1.RowCount - 1)
             {
                 DataGridViewRow row = dataGridView1.Rows[index];
                 nameBox.Text = row.Cells[1].Value.ToString();
@@ -173,10 +173,16 @@ namespace WinFormsApp1
             }
             if (count > 0)
             {
-                averadgeBox.Text = (sum / count).ToString();
-                database.closeConnection();
-                reader1.Close();
+                if (sum == 0.0)
+                {
+                    averadgeBox.Text = "Нет оценок";
+                }
+                else
+                {
+                    averadgeBox.Text = (sum / count).ToString();
+                }  
             }
+            reader1.Close();
             database.closeConnection();
         }
 
@@ -190,7 +196,7 @@ namespace WinFormsApp1
         {
             dataGridView1.Rows.Clear();
             createColumns();
-            string q = $"select SubjectID from Specializations\r\njoin Teachers\r\non Teachers.ID = Specializations.TeacherID\r\njoin users\r\non DataID = users.personalDataId\r\nwhere personalDataId = {pdID}";
+            string q = $"select SubjectID from Specializations\r\njoin Teachers\r\non Teachers.ID = Specializations.TeacherID where Teachers.Id = {pdID}";
             List<string> array = new List<string>();
 
             database.openConnection();

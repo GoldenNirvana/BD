@@ -67,6 +67,7 @@ namespace WinFormsApp1
 
         private void updateScr()
         {
+            dataGridView1.Rows.Clear();
             int c = 0;
             foreach (string str in subjs)
             {

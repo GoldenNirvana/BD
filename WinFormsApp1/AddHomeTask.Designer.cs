@@ -83,6 +83,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "AddHomeTask";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.AddHomeTask_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
