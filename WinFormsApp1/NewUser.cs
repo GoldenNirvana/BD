@@ -129,7 +129,7 @@ namespace WinFormsApp1
             SqlDataAdapter adapter = new SqlDataAdapter();
             DataTable table = new DataTable();
 
-            string sqlExpression = "inserNewUser";
+            string sqlExpression = "insertNewUser";
             SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
 
             command.CommandType = System.Data.CommandType.StoredProcedure;

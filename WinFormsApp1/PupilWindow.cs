@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormsApp1
 {
@@ -258,6 +259,7 @@ namespace WinFormsApp1
             adapter.Fill(table);
             return table.Rows[0]["CountOfMoney"].ToString();
         }
+
 
     }
 }

@@ -79,5 +79,32 @@ namespace WinFormsApp1
             ChangeSc sc = new ChangeSc();
             sc.Show();
         }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                insertClass(textBox1.Text, database);
+                MessageBox.Show("Класс создан"); 
+            }
+        }
+
+        private void insertClass(string className, DataBase database)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataTable table = new DataTable();
+            string sqlExpression = "insertClass";
+            SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlParameter textParam = new SqlParameter
+            {
+                ParameterName = "@className",
+                Value = className
+            };
+            command.Parameters.Add(textParam);
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+        }
+    
     }
 }

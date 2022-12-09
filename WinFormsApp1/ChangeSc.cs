@@ -29,6 +29,15 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "" && comboBox4.Text != ""
+                && textBox1.Text != "" && textBox2.Text != "")
+            {
+                insertLesson(classesId[comboBox1.SelectedIndex].ToString(), roomsId[comboBox2.SelectedIndex].ToString(), subjectsId[comboBox4.SelectedIndex].ToString(),
+                    textBox1.Text.ToString(), teacherID[comboBox3.SelectedIndex].ToString(), textBox2.Text.ToString(), dataBase);
+                MessageBox.Show("Добавлено в расписание");
+                return;
+            }
+            MessageBox.Show("Неверные параметры");
         }
 
         private void getClasses()
@@ -93,6 +102,59 @@ namespace WinFormsApp1
             }
             reader.Close();
             dataBase.closeConnection();
+        }
+
+        private void insertLesson(string s1, string s2, string s3, string s4, string s5, string s6, DataBase database)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataTable table = new DataTable();
+            string sqlExpression = "insertLesson";
+            SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter a1 = new SqlParameter
+            {
+                ParameterName = "@classId",
+                Value = s1
+            };
+            SqlParameter a2 = new SqlParameter
+            {
+                ParameterName = "@classRoomId",
+                Value = s2
+            };
+            SqlParameter a3 = new SqlParameter
+            {
+                ParameterName = "@subjectId",
+                Value = s3
+            };
+            SqlParameter a4 = new SqlParameter
+            {
+                ParameterName = "@date",
+                Value = s4
+            };
+            SqlParameter a5 = new SqlParameter
+            {
+                ParameterName = "@teacherId",
+                Value = s5
+            };
+            SqlParameter a6 = new SqlParameter
+            {
+                ParameterName = "@time",
+                Value = s6
+            };
+            command.Parameters.Add(a1);
+            command.Parameters.Add(a2);
+            command.Parameters.Add(a3);
+            command.Parameters.Add(a4);
+            command.Parameters.Add(a5);
+            command.Parameters.Add(a6);
+            adapter.SelectCommand = command;
+            adapter.Fill(table);  
+        }
+
+        private void ChangeSc_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
