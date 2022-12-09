@@ -15,7 +15,7 @@ namespace WinFormsApp1
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
+            textBox2.UseSystemPasswordChar = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -97,5 +97,6 @@ namespace WinFormsApp1
                 classId = int.Parse(table.Rows[0]["ClassID"].ToString());
             return table.Rows[0]["ID"].ToString();
         }
+
     }
 }
