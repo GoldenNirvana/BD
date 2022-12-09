@@ -58,7 +58,7 @@ namespace WinFormsApp1
 
         private void readSingleRows(DataGridView dgw, IDataRecord record)
         {
-            dgw.Rows.Add(record.GetInt32(0), record.GetString(1), record.GetString(2), record.GetString(3));
+            dgw.Rows.Add(record.GetInt32(0), record.GetString(2), record.GetString(1), record.GetString(3));
         }
 
         private void refrestDGW(DataGridView dgw, String indexClass)
@@ -134,8 +134,14 @@ namespace WinFormsApp1
             int ind = dataGridView2.CurrentCell.RowIndex;
             if (textBox1.Text != "")
             {
-                
                 DataGridViewRow row = dataGridView2.Rows[ind];
+                List<string> arr = createSubjectAvalible();
+                string b = row.Cells[4].Value.ToString();
+                if (!arr.Contains(b))
+                {
+                    MessageBox.Show("Эту оценку нельзя изменить.");
+                    return;
+                }
                 string q = $"update HomeTasksAnswers set Grade = '{textBox1.Text}' where ID = {row.Cells[0].Value.ToString()}";
                 database.openConnection();
                 SqlCommand command = new SqlCommand(q, database.GetSqlConnection());
@@ -153,9 +159,13 @@ namespace WinFormsApp1
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns.Add("gr", "Оценка");
             dataGridView2.Columns.Add("date", "Дата обновления");
+            dataGridView2.Columns.Add("sub", "Предмет");
+            dataGridView2.Columns.Add("subId", "id");
+            dataGridView2.Columns[4].Visible = false;
+
             DataGridViewRow row = dataGridView1.Rows[index];
             int id = int.Parse(row.Cells[0].Value.ToString());
-            string q = $"select ID, Grade, UpdateDate from HomeTasksAnswers where PupilID = '{id.ToString()}'";
+            string q = $"select HomeTasksAnswers.Id, Grade, UpdateDate, SubjectName, SubjectID as sId from HomeTasksAnswers\r\njoin HomeTasks on HomeTasksAnswers.HomeTaskID = HomeTasks.ID\r\njoin Schedule on HomeTasks.LessonID = Schedule.ID\r\njoin Subjects on Subjects.ID = Schedule.SubjectID\r\nwhere PupilID = {id} and Grade is not null";
             int count = 0;
             double sum = 0.0;
             SqlCommand command1 = new SqlCommand(q, database.GetSqlConnection());
@@ -173,7 +183,7 @@ namespace WinFormsApp1
                     continue;
                 }
                 count++;
-                dataGridView2.Rows.Add(reader1.GetInt32(0), reader1.GetInt32(1), reader1.GetString(2));
+                dataGridView2.Rows.Add(reader1.GetInt32(0), reader1.GetInt32(1), reader1.GetString(2), reader1.GetString(3), reader1.GetInt32(4));
             }
             if (count > 0)
             {
@@ -197,9 +207,7 @@ namespace WinFormsApp1
         }
 
         private List<string> createSubjectAvalible()
-        {
-            dataGridView1.Rows.Clear();
-            
+        {  
             string q = $"select SubjectID from Specializations\r\njoin Teachers\r\non Teachers.ID = Specializations.TeacherID where Teachers.Id = {pdID}";
             List<string> array = new List<string>();
 

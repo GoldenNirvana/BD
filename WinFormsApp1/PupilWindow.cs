@@ -43,8 +43,8 @@ namespace WinFormsApp1
 
         private void createColumnsForMarks()
         {
-            dataGridView2.Columns.Add("n0", "Предмет");
             dataGridView2.Columns.Add("n1", "Оценка");
+            dataGridView2.Columns.Add("n0", "Предмет");
         }
 
         private void createColumnsForRaiting()
@@ -107,6 +107,7 @@ namespace WinFormsApp1
 
         private void addAnswer_Click(object sender, EventArgs e)
         {
+            
             int i = dataGridView1.CurrentCell.RowIndex;
             string taskId = dataGridView1.Rows[i].Cells[2].Value.ToString();
             addNewHomeTaskAnswer(textBox1.Text, Id.ToString(), taskId, dataBase);

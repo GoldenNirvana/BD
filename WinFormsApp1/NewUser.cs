@@ -9,15 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormsApp1
 {
     public partial class NewUser : Form
     {
         DataBase dataBase = new DataBase();
+        List<int> classesId = new List<int>();
         public NewUser()
         {
             InitializeComponent();
+            getClasses();
         }
 
 
@@ -29,7 +32,7 @@ namespace WinFormsApp1
                 {
                     string newPd = addNewPD(textBox2.Text, textBox1.Text, textBox3.Text, textBox4.Text, dataBase);
                     addNewUser("0", newPd, textBox7.Text, textBox6.Text, dataBase);
-                    addNewPupil(newPd, textBox5.Text, dataBase);
+                    addNewPupil(newPd, classesId[comboBox1.SelectedIndex].ToString(), dataBase);
                     MessageBox.Show("Пользователь успешно добавлен.");
 
                 }
@@ -50,13 +53,28 @@ namespace WinFormsApp1
                 MessageBox.Show("Данные некорректны.");
             }
         }
+        private void getClasses()
+        {
+            string str = $"select ClassName, Id from Classes";
+            dataBase.openConnection();
+            SqlCommand command = new SqlCommand(str, dataBase.GetSqlConnection());
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string className = reader.GetValue(0).ToString();
+                classesId.Add(int.Parse(reader.GetValue(1).ToString()));
+                comboBox1.Items.Add(className);
+            }
+            reader.Close();
+            dataBase.closeConnection();
+        }
 
         private bool isOk()
         {
             bool a = textBox7.Text != "" && textBox6.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "";
             if (tabControl1.SelectedTab == tabPage1)
             {
-                return a && textBox5.Text != "";
+                return a && comboBox1.Text != "";
             }
             if (tabControl1.SelectedTab == tabPage2)
             {
