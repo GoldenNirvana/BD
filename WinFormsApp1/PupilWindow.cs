@@ -258,6 +258,5 @@ namespace WinFormsApp1
             return table.Rows[0]["CountOfMoney"].ToString();
         }
 
-
     }
 }

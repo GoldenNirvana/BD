@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace WinFormsApp1
 {
     public partial class SecWindow : Form
     {
-
+        DataBase database = new DataBase();
         Form form;
         string pdId;
 
@@ -24,51 +25,47 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        private void changeScheduleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void putSubjectToTeacher(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addOrDeletePupil(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void addorDeleteHeadTeacher(object sender, EventArgs e)
-        {
-
-        }
-
-        private void showAllTeachers(object sender, EventArgs e)
-        {
-
-        }
-
-        private void showHeadTeachers(object sender, EventArgs e)
-        {
-
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
             form.Show();
             Close();
         }
 
-        private void SecWindow_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void button8_Click(object sender, EventArgs e)
         {
             NewUser user = new NewUser();
             user.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SecWindow_Load(object sender, EventArgs e)
+        {
+            dataGridView1.Columns.Add("n0", "Фамилия");
+            dataGridView1.Columns.Add("n1", "Остаток средств");
+            dataGridView1.Columns.Add("n1", "Tелефон");
+            DataTable dt = getPupilsForTable(database);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dataGridView1.Rows.Add(dt.Rows[i]["Surname"].ToString(), dt.Rows[i]["CountOfMoney"].ToString(), dt.Rows[i]["PhoneNumber"].ToString());
+            }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private DataTable getPupilsForTable(DataBase database)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataTable table = new DataTable();
+            string sqlExpression = "getPupilsLittleMoney";
+            SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            return table;
         }
     }
 }

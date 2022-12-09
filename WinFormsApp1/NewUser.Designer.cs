@@ -107,17 +107,18 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Математика",
-            "Информатика",
+            "Физкультура",
+            "Химия",
             "История",
             "Общетсво",
-            "Химия",
+            "Русский язык",
+            "Информатика",
+            "Киберспорт",
             "Биология",
-            "Физика",
-            "Физкультура",
-            "Киберспорт"});
-            this.checkedListBox1.Location = new System.Drawing.Point(166, 6);
+            "Физика"});
+            this.checkedListBox1.Location = new System.Drawing.Point(177, 0);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(414, 114);
+            this.checkedListBox1.Size = new System.Drawing.Size(414, 136);
             this.checkedListBox1.TabIndex = 11;
             // 
             // spec
@@ -245,6 +246,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Name = "NewUser";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NewUser";
             this.Load += new System.EventHandler(this.NewUser_Load);
             this.tabControl1.ResumeLayout(false);

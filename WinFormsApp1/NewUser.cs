@@ -25,7 +25,7 @@ namespace WinFormsApp1
         {
             if (isOk())
             {
-                if (tabControl1.TabIndex == 1)
+                if (tabControl1.SelectedTab == tabPage1)
                 {
                     string newPd = addNewPD(textBox2.Text, textBox1.Text, textBox3.Text, textBox4.Text, dataBase);
                     addNewUser("0", newPd, textBox7.Text, textBox6.Text, dataBase);
@@ -33,10 +33,15 @@ namespace WinFormsApp1
                     MessageBox.Show("Пользователь успешно добавлен.");
 
                 }
-                if (tabControl1.TabIndex == 0)
+                if (tabControl1.SelectedTab == tabPage2)
                 {
                     string newPd = addNewPD(textBox2.Text, textBox1.Text, textBox3.Text, textBox4.Text, dataBase);
                     addNewUser("1", newPd, textBox7.Text, textBox6.Text, dataBase);
+                    string teacherId = addNewTeacher(newPd, dataBase);
+                    for (int i = 0; i < checkedListBox1.CheckedIndices.Count; i++)
+                    {
+                        addSpecs(teacherId, (checkedListBox1.CheckedIndices[i] + 1).ToString(), dataBase);
+                    }
                     MessageBox.Show("Пользователь успешно добавлен.");
                 }
             }
@@ -49,11 +54,11 @@ namespace WinFormsApp1
         private bool isOk()
         {
             bool a = textBox7.Text != "" && textBox6.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "";
-            if (tabControl1.TabIndex == 1)
+            if (tabControl1.SelectedTab == tabPage1)
             {
                 return a && textBox5.Text != "";
             }
-            if (tabControl1.TabIndex == 0)
+            if (tabControl1.SelectedTab == tabPage2)
             {
                 return a && (checkedListBox1.CheckedItems.Count > 0);
             }
@@ -161,6 +166,55 @@ namespace WinFormsApp1
             {
                 ParameterName = "@classId",
                 Value = classId
+            };
+            command.Parameters.Add(a1);
+            command.Parameters.Add(a2);
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+        }
+
+        private static string addNewTeacher(string pdId, DataBase database)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataTable table = new DataTable();
+
+            string sqlExpression = "insertTeacher";
+            SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
+
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter a1 = new SqlParameter
+            {
+                ParameterName = "@pdId",
+                Value = pdId
+            };
+
+            command.Parameters.Add(a1);
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            return table.Rows[0]["ID"].ToString();
+        }
+
+        private static void addSpecs(string Id,string subId, DataBase database)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataTable table = new DataTable();
+
+            string sqlExpression = "insertTeacherSpecs";
+            SqlCommand command = new SqlCommand(sqlExpression, database.GetSqlConnection());
+
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter a1 = new SqlParameter
+            {
+                ParameterName = "@id",
+                Value = Id
+            };
+
+            SqlParameter a2 = new SqlParameter
+            {
+                ParameterName = "@subId",
+                Value = subId
             };
             command.Parameters.Add(a1);
             command.Parameters.Add(a2);
