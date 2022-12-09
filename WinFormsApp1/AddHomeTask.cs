@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,9 @@ namespace WinFormsApp1
                 SqlDataReader reader1 = command1.ExecuteReader();
                 while (reader1.Read())
                 {
-                    dataGridView1.Rows.Add(reader1.GetString(3), reader1.GetString(4), reader1.GetString(2), reader1.GetInt32(0));
+                    string a = reader1.GetDateTime(1).ToString();
+                    a = a.Substring(0, 10);
+                    dataGridView1.Rows.Add(reader1.GetString(3), reader1.GetString(4), reader1.GetString(2) + " " + a, reader1.GetInt32(0));
                 }
                 reader1.Close();
                 db.closeConnection();
@@ -128,5 +131,6 @@ namespace WinFormsApp1
             MessageBox.Show("Задание выдано.");
             return table;
         }
+
     }
 }

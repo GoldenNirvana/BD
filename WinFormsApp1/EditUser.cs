@@ -21,6 +21,12 @@ namespace WinFormsApp1
         {
             InitializeComponent();
             createColumns();
+            updateTable();
+        }
+        
+        private void updateTable()
+        {
+            dataGridView1.Rows.Clear();
             dt = getPersons(database);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -30,8 +36,8 @@ namespace WinFormsApp1
                     dataGridView1.Rows.Add(dt.Rows[i]["Surname"].ToString(), dt.Rows[i]["Namee"].ToString(), "Преподаватель");
             }
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
         }
+
 
         private void createColumns()
         {
@@ -56,7 +62,8 @@ namespace WinFormsApp1
         {
             updatePerson(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text,
                 dt.Rows[ind]["pdID"].ToString(),
-                dt.Rows[ind]["id"].ToString(), database); ;
+                dt.Rows[ind]["id"].ToString(), database);
+            updateTable();
         }
 
         private static void updatePerson(string s1, string s2, string s3, string s4, string s5, string s6, string s7, string s8, DataBase database)

@@ -81,7 +81,7 @@ namespace WinFormsApp1
         {
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataBase.openConnection();
-            string qu = $"select Grade, SubjectName from HomeTasksAnswers\r\njoin HomeTasks on HomeTasksAnswers.HomeTaskID = HomeTasks.ID\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin Subjects on Schedule.SubjectID = Subjects.ID\r\nwhere PupilID = {Id} and Grade is not Null\r\ngroup by Grade, SubjectName";
+            string qu = $"select Grade, SubjectName from HomeTasksAnswers\r\njoin HomeTasks on HomeTasksAnswers.HomeTaskID = HomeTasks.ID\r\njoin Schedule on HomeTasks.LessonID = Schedule.Id\r\njoin Subjects on Schedule.SubjectID = Subjects.ID\r\nwhere PupilID = {Id} and Grade is not Null";
             SqlCommand command1 = new SqlCommand(qu, dataBase.GetSqlConnection());
             SqlDataReader reader1 = command1.ExecuteReader();
             while (reader1.Read())

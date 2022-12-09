@@ -30,9 +30,9 @@ namespace WinFormsApp1
         private void createColumns()
         {
             dataGridView1.Columns.Add("n0", "Предмет");
-            dataGridView1.Columns.Add("n1", "Класс");
             dataGridView1.Columns.Add("n2", "ФИО");
             dataGridView1.Columns.Add("n3", "Ответ");
+            dataGridView1.Columns.Add("n1", "Класс");
             dataGridView1.Columns.Add("n4", "Дата загрузки");
             dataGridView1.Columns.Add("id", "ID");
             dataGridView1.Columns[5].Visible = false;
