@@ -218,9 +218,5 @@ namespace WinFormsApp1
             return array;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

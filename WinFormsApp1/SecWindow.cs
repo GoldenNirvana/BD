@@ -70,7 +70,8 @@ namespace WinFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            EditUser editUser = new EditUser();
+            editUser.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
