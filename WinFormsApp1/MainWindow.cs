@@ -66,7 +66,6 @@ namespace WinFormsApp1
             command.Parameters.Add(text);
             adapter.SelectCommand = command;
             adapter.Fill(table);
-            Console.WriteLine(table.Rows[0]["PersonalDataId"].ToString());
             return table;
         }
 

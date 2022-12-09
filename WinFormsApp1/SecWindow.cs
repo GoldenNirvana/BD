@@ -18,7 +18,6 @@ namespace WinFormsApp1
 
         public SecWindow(Form form, string pdId)
         {
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.form = form;
             this.pdId = pdId;
             form.Hide();
